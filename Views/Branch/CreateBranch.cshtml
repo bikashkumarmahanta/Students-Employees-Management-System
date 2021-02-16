@@ -1,0 +1,265 @@
+﻿@model MyMCE.Models.Domain.Branches.tbl_MCE_Branch
+
+@{
+    ViewBag.Title = "CreateBranch";
+    Layout = "~/Views/Shared/_LayoutAdminLte.cshtml";
+}
+<script src="~/adminlte/js/sweet-alert.init.js"></script>
+<script src="~/adminlte/js/sweetalert.min.js"></script>
+<script src="~/adminlte/js/sweetalert2.all.min.js"></script>
+@if (TempData["Success"] != null)
+{
+    <script type="text/javascript">
+                                swal.fire(
+                                    {
+                                        title: '@TempData["Success"]',
+                                        type: 'success'
+                                    });
+    </script>}
+
+
+
+@using (Html.BeginForm("CreateBranch", "Branch", FormMethod.Post, new { @id = "CreateForm" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row">
+
+            <div class="col-12 col-sm-12">
+                <div class="card card-primary card-outline card-outline-tabs">
+                    <div class="card-header p-0 border-bottom-0">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active">New Branch</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Branch/ViewBranchDataTableWithSearchPanel">View Branch</a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="custom-tabs-new-subject">
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.intCourseID)
+                                          @*<a href="~/Views/_ViewStart.cshtml">~/Views/_ViewStart.cshtml</a>*@
+                                            @Html.DropDownListFor(Model => Model.intCourseID, new SelectList(ViewBag.courseList as System.Collections.IEnumerable, "intCourseID", "vchCourseName"),
+                        "Select a Course", htmlAttributes: new { @class = "form-control" })
+
+                                            @Html.ValidationMessageFor(model => model.intCourseID, "", new { @class = "text-danger" })
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.vchBranchCode)
+                                            @Html.EditorFor(model => model.vchBranchCode, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.vchBranchCode, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+
+
+                                            @Html.LabelFor(model => model.vchBranchName)
+
+                                            @Html.EditorFor(model => model.vchBranchName, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.vchBranchName, "", new { @class = "text-danger" })
+
+
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.vchBranchDescription)
+
+                                            @Html.EditorFor(model => model.vchBranchDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.vchBranchDescription, "", new { @class = "text-danger" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.vchRemarks)
+
+                                            @Html.EditorFor(model => model.vchRemarks, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.vchRemarks, "", new { @class = "text-danger" })
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <input type="submit" value="Create" id="btnSubmit" class="btn btn-info" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+}
+
+
+@*<!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+
+                <h3 class="card-title">Add</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- card-body -->
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="active tab-pane" id="Add">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.intCourseID)
+
+                                    @Html.DropDownListFor(Model => Model.intCourseID, new SelectList(ViewBag.courseList as System.Collections.IEnumerable, "intCourseID", "vchCourseName"),
+                                                   "Select a Course", htmlAttributes: new { @class = "form-control" })
+
+                                    @Html.ValidationMessageFor(model => model.intCourseID, "", new { @class = "text-danger" })
+
+
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.vchBranchCode)
+                                    @Html.EditorFor(model => model.vchBranchCode, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.vchBranchCode, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+
+
+                                    @Html.LabelFor(model => model.vchBranchName)
+
+                                    @Html.EditorFor(model => model.vchBranchName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.vchBranchName, "", new { @class = "text-danger" })
+
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.vchBranchDescription)
+
+                                    @Html.EditorFor(model => model.vchBranchDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.vchBranchDescription, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.vchRemarks)
+
+                                    @Html.EditorFor(model => model.vchRemarks, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.vchRemarks, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-10">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="View">
+
+                    </div>
+
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+
+                <input type="submit" value="Submit" id="btnSubmit" class="btn btn-info" />
+                <h3 class="btn btn-default float-right">@Html.ActionLink("Back to List", "BranchReport")</h3>
+
+            </div>
+            <!-- /.card-footer-->
+        </div>
+        <!-- /.card -->
+    }
+
+    @section Scripts {
+        <script type="text/javascript" language="javascript">
+            $(function () {
+
+                $("#btnSubmit").click(function () {
+
+                    if (confirm("Are you sure you want to Save changes?")) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+
+                });
+            });
+
+        </script>
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@

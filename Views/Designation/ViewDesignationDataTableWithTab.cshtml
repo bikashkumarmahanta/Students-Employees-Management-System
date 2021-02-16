@@ -1,0 +1,155 @@
+﻿@model IEnumerable<MyMCE.Models.Domain.Designations.tbl_MCE_Designations>
+
+@{
+    ViewBag.Title = "ViewDesignationDataTableWithTab";
+    Layout = "~/Views/Shared/_LayoutAdminLte.cshtml";
+}
+
+<script src="~/adminlte/js/sweet-alert.init.js"></script>
+<script src="~/adminlte/js/sweetalert.min.js"></script>
+<script src="~/adminlte/js/sweetalert2.all.min.js"></script>
+
+@if (TempData["Success"] != null)
+{
+    <script type="text/javascript">
+                            swal.fire(
+                                {
+                                    title: '@TempData["Success"]',
+                                    type: 'success'
+                                });
+    </script>
+
+}
+
+<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    @* Normal *@
+    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            debugger
+            $("#DesignationTable").DataTable(
+                {
+                    "processing": true, // for show progress bar
+                    "serverSide": true, // for process server side
+                    "filter": true, // this is for disable filter (search box)
+                    "orderMulti": false, // for disable multi column order
+
+                    "order": [[1, "asc"]], // Default ordering (sorting) asc, desc
+                    //"dom": '<"top"i>rt<"bottom"lp><"clear">', // for hide default global search box
+                    //"dom": '<"top"i>rt<"bottom"flp><"clear">',
+                    //To display processing icon while loading the data
+                    "language":
+                    {
+                        "processing": "<div class='overlay custom-loader-background'><i class='fa fa-cog fa-spin custom-loader-color'></i></div>"
+                    },
+
+                    "ajax": {
+                        "url": "/Designation/GetDesignations",
+                        "type": "POST",
+                        "datatype": "json"
+                    },
+
+                    "columnDefs":
+                        [{
+
+                            "targets": [0],
+                            "visible": false,
+                            "searchable": false
+                        },
+                        {
+
+                            "targets": [2],
+                            "searchable": false,
+                            "orderable": true
+                        }],
+                    "columns": [
+                        { "data": "intDesignationID", "name": "DesignationID", "width": "20%" },
+
+                        { "data": "vchDesignation", "name": "Designation", "width": "30%" },
+
+                        { "data": "vchDesignationDescription", "name": "Designation Description", "width": "30%" },
+
+                        { "data": "vchRemarks", "name": "Remarks", "width": "20%" },
+
+
+
+                        {
+                            "data": "intDesignationID", "width": "15%", "render": function (data) {
+                                return '<a class="btn btn-primary btn-sm" href="/Designation/EditDesignation/' + data + '"><i class="fas fa-edit"></i> </a><a class="btn btn-warning  btn-sm" style="margin-left:5px " href="/Designation/DesignationDetails/' + data + '"><i class="fas fa-bars"></i>  </a> <a class="btn btn-danger  btn-sm" style="margin-left:5px " href="/Designation/DeleteDesignation/' + data + '"><i class="fas fa-trash"></i>  </a>';
+                            },
+                            "orderable": false
+                        }
+                    ]
+                });
+
+        });
+    </script>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row">
+
+            <div class="col-12 col-sm-12">
+                <div class="card card-primary card-outline card-outline-tabs">
+                    <div class="card-header p-0 border-bottom-0">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Designation/CreateDesignationWithTab">New Designation</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active">View Designation</a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="custom-tabs-view-designation">
+                                <table id="DesignationTable" class="display">
+                                    @*Semantic UI*@
+                                    @*<table id="employeeTable" class="ui celled table">*@
+                                    @*Bootstrap*@
+                                    @*<table id="employeeTable" class="table table-striped table-bordered">*@
+
+                                    <thead>
+                                        <tr>
+                                            <th>Designation ID</th>
+                                            <th>Designation Name</th>
+                                            <th>Designation Description</th>
+                                            <th>Remarks</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+
+                                </table>
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="View">
+
+                            </div>
+
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div>
+
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+}
+
+

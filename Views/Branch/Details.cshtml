@@ -1,0 +1,144 @@
+﻿@model MyMCE.Models.Domain.Branches.tbl_MCE_Branch
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdminLte.cshtml";
+}
+
+
+@section Scripts {
+    <script type="text/javascript" language="javascript">
+        $(function () {
+
+            $("#btnSubmit").click(function () {
+
+                if (confirm("Are you sure you want to Save changes?")) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            });
+        });
+    </script>
+}
+
+
+@using (Html.BeginForm("Details", "Branch", FormMethod.Post, new { @id = "CreateForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Details Branch</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <!-- card-body -->
+        <div class="card-body">
+            <div class="tab-content">
+                <div class="active tab-pane" id="Add">
+                    <div class="row">
+
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.intCourseID)
+
+                                @Html.DropDownListFor(Model => Model.intCourseID, new SelectList(ViewBag.courseList as System.Collections.IEnumerable, "intCourseID", "vchCourseName", ViewBag.DefaultBrand),
+                                               "Select a Course",  htmlAttributes: new { @class = "form-control form-control-sm", @disabled = "disabled" })
+
+                                @Html.HiddenFor(Model => Model.intCourseID)
+
+                                @Html.ValidationMessageFor(model => model.intCourseID, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <!-- text input -->
+                            <div class="form-group">
+                                @Html.HiddenFor(model => model.intBranchID)
+
+                                @Html.LabelFor(model => model.vchBranchCode)
+                                @Html.EditorFor(model => model.vchBranchCode, new { htmlAttributes = new { @class = "form-control form-control-sm", @disabled = "disabled" } })
+                                <!-- As desabled control can not return the value to controller hence hiddent field is used to return the value -->
+                                @Html.HiddenFor(model => model.vchBranchCode)
+                                @Html.ValidationMessageFor(model => model.vchBranchCode, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.vchBranchName)
+
+                                @Html.EditorFor(model => model.vchBranchName, new { htmlAttributes = new { @class = "form-control form-control-sm", @disabled = "disabled" } })
+                                @Html.HiddenFor(model => model.vchBranchName)
+                                @Html.ValidationMessageFor(model => model.vchBranchName, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.vchBranchDescription)
+
+                                @Html.EditorFor(model => model.vchBranchDescription, new { htmlAttributes = new { @class = "form-control form-control-sm", @disabled = "disabled" } })
+                                @Html.HiddenFor(model => model.vchBranchDescription)
+                                @Html.ValidationMessageFor(model => model.vchBranchDescription, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class=" row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.vchRemarks)
+
+                                @Html.EditorFor(model => model.vchRemarks, new { htmlAttributes = new { @class = "form-control form-control-sm", @disabled = "disabled" } })
+                                @Html.HiddenFor(model => model.vchRemarks)
+                                @Html.ValidationMessageFor(model => model.vchRemarks, "", new { @class = "text-danger" })
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="View">
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- /.card-body -->
+
+
+        <h3 class="btn btn-default float-right">@Html.ActionLink("Back to List", "ViewBranchDataTableWithSearchPanel")</h3>
+    </div>
+    <!-- /.card-footer-->
+
+    <!-- /.card -->
+}

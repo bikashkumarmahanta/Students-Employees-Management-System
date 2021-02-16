@@ -1,0 +1,182 @@
+﻿@model MyMCE.Models.Domain.Course.tbl_MCE_Course
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdminLte.cshtml";
+}
+
+<script src="~/adminlte/js/sweet-alert.init.js"></script>
+<script src="~/adminlte/js/sweetalert.min.js"></script>
+<script src="~/adminlte/js/sweetalert2.all.min.js"></script>
+
+
+@using (Html.BeginForm("EditCourse", "Course", FormMethod.Post, new { @id = "CreateForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+
+            <h3 class="card-title">Edit Course</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <!-- card-body -->
+        <div class="card-body">
+            <div class="tab-content">
+                <div class="active tab-pane" id="Add">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <!-- text input -->
+                            <div class="form-group">
+                                @Html.HiddenFor(model => model.intCourseID)
+
+                                @Html.LabelFor(model => model.vchCourseName)
+                                @Html.EditorFor(model => model.vchCourseName, new { htmlAttributes = new { @class = "form-control form-control-sm", @disabled = "disabled" } })
+                                <!-- As desabled control can not return the value to controller hence hiddent field is used to return the value -->
+                                @Html.HiddenFor(model => model.vchCourseName)
+                                @Html.ValidationMessageFor(model => model.vchCourseName, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.vchCourseDescription)
+
+                                @Html.EditorFor(model => model.vchCourseDescription, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                @Html.ValidationMessageFor(model => model.vchCourseDescription, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.intNoOfYears)
+
+                                @Html.EditorFor(model => model.intNoOfYears, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                @Html.ValidationMessageFor(model => model.intNoOfYears, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.intNoOfSemesters)
+
+                                @Html.EditorFor(model => model.intNoOfSemesters, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.intNoOfSemesters, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.intSemesterDuration)
+                                @Html.EditorFor(model => model.intSemesterDuration, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.intSemesterDuration, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-3">
+
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.dtmStartDate)
+
+                                @Html.EditorFor(model => model.dtmStartDate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.dtmStartDate, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.dtmEndDate)
+
+                                @Html.EditorFor(model => model.dtmEndDate, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.dtmEndDate, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.vchRemarks)
+
+                                @Html.EditorFor(model => model.vchRemarks, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                @Html.ValidationMessageFor(model => model.vchRemarks, "", new { @class = "text-danger" })
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="View">
+
+                </div>
+
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <input type="submit" value="Update" id="btnSubmit" class="btn btn-info" />
+
+
+
+            <h3 class="btn btn-default float-right">@Html.ActionLink("Back to List", "CourseDataTable")</h3>
+
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+}
+
+@section Scripts {
+    <script type="text/javascript" language="javascript">
+        $(function () {
+
+            $("#btnSubmit").click(function () {
+
+                if (confirm("Are you sure you want to Save changes?")) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            });
+        });
+
+    </script>
+    }
+
+

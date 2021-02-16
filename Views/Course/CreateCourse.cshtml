@@ -1,0 +1,170 @@
+﻿@model MyMCE.Models.Domain.Course.tbl_MCE_Course
+
+@{
+    ViewBag.Title = "Create Course";
+    Layout = "~/Views/Shared/_LayoutAdminLte.cshtml";
+}
+
+<script src="~/adminlte/js/sweet-alert.init.js"></script>
+<script src="~/adminlte/js/sweetalert.min.js"></script>
+<script src="~/adminlte/js/sweetalert2.all.min.js"></script>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+@if (TempData["Success"] != null)
+{
+    <script type="text/javascript">
+                            swal.fire(
+                                {
+                                    title: '@TempData["Success"]',
+                                    type: 'success'
+                                });
+    </script>
+
+}
+@section Scripts {
+    <script type="text/javascript" language="javascript">
+        $(function () {
+
+            $("#btnSubmit").click(function () {
+
+                if (confirm("Are you sure you want to Save changes?")) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            });
+        });
+    </script>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row">
+
+            <div class="col-12 col-sm-12">
+                <div class="card card-primary card-outline card-outline-tabs">
+                    <div class="card-header p-0 border-bottom-0">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active">New Course</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Course/CourseDataTable">View Course</a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <!-- card-body -->
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="custom-tabs-new-subject">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.vchCourseName, htmlAttributes: new { @class = "control-label col-md-6" })
+                                            @Html.EditorFor(model => model.vchCourseName, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.vchCourseName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.vchCourseDescription, htmlAttributes: new { @class = "control-label col-md-10" })
+                                            @Html.EditorFor(model => model.vchCourseDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.vchCourseDescription, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.intNoOfYears, htmlAttributes: new { @class = "control-label col-md-6" })
+                                            @Html.EditorFor(model => model.intNoOfYears, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.intNoOfYears, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.intNoOfSemesters, htmlAttributes: new { @class = "control-label col-md-6" })
+                                            @Html.EditorFor(model => model.intNoOfSemesters, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.intNoOfSemesters, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.intSemesterDuration, htmlAttributes: new { @class = "control-label col-md-10" })
+                                            @Html.EditorFor(model => model.intSemesterDuration, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.intSemesterDuration, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.dtmStartDate, htmlAttributes: new { @class = "control-label col-md-6" })
+                                            @Html.EditorFor(model => model.dtmStartDate, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.dtmStartDate, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.dtmEndDate, htmlAttributes: new { @class = "control-label col-md-6" })
+                                            @Html.EditorFor(model => model.dtmEndDate, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.dtmEndDate, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(model => model.vchRemarks, htmlAttributes: new { @class = "control-label col-md-6" })
+                                            @Html.EditorFor(model => model.vchRemarks, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.vchRemarks, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <input type="submit" value="Create" id="btnSubmit" class="btn btn-info" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+}
+
+
+
+
+
+                                                                                   

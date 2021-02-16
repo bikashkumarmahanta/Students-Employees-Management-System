@@ -1,0 +1,175 @@
+﻿@model MyMCE.Models.Domain.Function.tbl_MCE_Function
+@{
+    ViewBag.Title = "CreateFunctionWithTab";
+    Layout = "~/Views/Shared/_LayoutAdminLte.cshtml";
+}
+<script src="~/adminlte/js/sweet-alert.init.js"></script>
+<script src="~/adminlte/js/sweetalert.min.js"></script>
+<script src="~/adminlte/js/sweetalert2.all.min.js"></script>
+
+@if (TempData["Success"] != null)
+{
+    <script type="text/javascript">
+                            swal.fire(
+                                {
+                                    title: '@TempData["Success"]',
+                                    type: 'success'
+                                });
+    </script>
+
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <!-- Main content -->
+    <section class="content">
+
+        <div class="row">
+
+            <div class="col-12 col-sm-12">
+                <div class="card card-primary card-outline card-outline-tabs">
+                    <div class="card-header p-0 border-bottom-0">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active">New Function</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Function/ViewFunctionDataTableWithSearchPanel">View Function</a>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="custom-tabs-new-subject">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(model => model.vchFunctionName)
+
+                                            @Html.EditorFor(model => model.vchFunctionName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                            @Html.ValidationMessageFor(model => model.vchFunctionName, "", new { @class = "text-danger" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(model => model.vchFileName)
+
+                                            @Html.EditorFor(model => model.vchFileName, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                            @Html.ValidationMessageFor(model => model.vchFileName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => model.vchDescription)
+
+                                            @Html.EditorFor(model => model.vchDescription, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                            @Html.ValidationMessageFor(model => model.vchDescription, "", new { @class = "text-danger" })
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(model => model.vchAction1)
+
+                                            @Html.EditorFor(model => model.vchAction1, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                            @Html.ValidationMessageFor(model => model.vchAction1, "", new { @class = "text-danger" })
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <!-- text input -->
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(model => model.vchAction2)
+
+                                            @Html.EditorFor(model => model.vchAction2, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                            @Html.ValidationMessageFor(model => model.vchAction2, "", new { @class = "text-danger" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(model => model.vchAction3)
+
+                                            @Html.EditorFor(model => model.vchAction3, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                            @Html.ValidationMessageFor(model => model.vchAction3, "", new { @class = "text-danger" })
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+
+                                            @Html.LabelFor(model => model.vchRemarks)
+
+                                            @Html.EditorFor(model => model.vchRemarks, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                                            @Html.ValidationMessageFor(model => model.vchRemarks, "", new { @class = "text-danger" })
+
+
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <input type="submit" value="Create" id="btnSubmit" class="btn btn-info" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+}
+@section Scripts {
+    <script type="text/javascript" language="javascript">
+        $(function () {
+
+            $("#btnSubmit").click(function () {
+
+                if (confirm("Are you sure you want to Save changes?")) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            });
+        });
+
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+}

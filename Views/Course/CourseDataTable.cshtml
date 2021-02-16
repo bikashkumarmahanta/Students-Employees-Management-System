@@ -1,0 +1,138 @@
+﻿@model MyMCE.Models.Domain.Course.tbl_MCE_Course
+
+@{
+    ViewBag.Title = "Course Report";
+    Layout = "~/Views/Shared/_LayoutAdminLte.cshtml";
+}
+<script src="~/adminlte/js/sweet-alert.init.js"></script>
+<script src="~/adminlte/js/sweetalert.min.js"></script>
+<script src="~/adminlte/js/sweetalert2.all.min.js"></script>
+@if (TempData["Success"] != null)
+{
+    <script type="text/javascript">
+                            swal.fire(
+                                {
+                                    title: '@TempData["Success"]',
+                                    type: 'success'
+                                });
+    </script>
+
+}
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-12 col-sm-12">
+            <div class="card card-primary card-outline card-outline-tabs">
+                <div class="card-header p-0 border-bottom-0">
+                    <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Course/CreateCourse">New Course</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active">View Course</a>
+                        </li>
+
+                    </ul>
+
+
+
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
+
+                        <table id="CourseTable" class="display">
+
+                            <thead>
+                                <tr>
+                                    <th>Course ID</th>
+                                    <th>Course Name</th>
+
+                                    <th>Course Description</th>
+                                    <th>No Of Years</th>
+                                    <th>No Of Semesters</th>
+                                    <th>Action</th>
+
+
+                                </tr>
+                            </thead>
+
+                        </table>
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" />
+@section scripts{
+    @* Normal *@
+    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            debugger
+            $("#CourseTable").DataTable(
+                {
+                    "processing": true, // for show progress bar
+                    "serverSide": true, // for process server side
+                    "filter": true, // this is for disable filter (search box)
+                    "orderMulti": false, // for disable multi column order
+
+                    "order": [[3, "asc"]], // Default ordering (sorting) asc, desc
+                    //"dom": '<"top"i>rt<"bottom"lp><"clear">', // for hide default global search box
+                    //"dom": '<"top"i>rt<"bottom"flp><"clear">',
+                    //To display processing icon while loading the data
+                    "language":
+                    {
+                        "processing": "<div class='overlay custom-loader-background'><i class='fa fa-cog fa-spin custom-loader-color'></i></div>"
+                    },
+
+                    "ajax": {
+                        "url": "/Course/GetCourse",
+                        "type": "POST",
+                        "datatype": "json"
+                    },
+
+                    "columnDefs":
+                        [{
+
+                            "targets": [0],
+                            "visible": false,
+                            "searchable": false
+                        },
+                        {
+
+                            "targets": [2],
+                            "searchable": false,
+                            "orderable": true
+                        }],
+                    "columns": [
+                        { "data": "intCourseID", "name": "Course ID", "width": "30%" },
+
+                        { "data": "vchCourseName", "name": "Course Name", "width": "30%" },
+
+                        { "data": "vchCourseDescription", "title": "Course Description", "name": "vchCourseDescription", "width": "30%" },
+
+                        { "data": "intNoOfYears", "name": "No Of Years", "width": "10%" },
+
+                        { "data": "intNoOfSemesters", "name": "No Of Semesters", "width": "10%" },
+
+                        {
+                            "data": "intCourseID", "width": "50px", "render": function (data) {
+                                return '<a class="btn btn-primary btn-sm" href="/Course/EditCourse/' + data + '"><i class="fas fa-edit"></i> </a><a class="btn btn-warning  btn-sm" style="margin-left:5px " href="/Course/CourseDetails/' + data + '"><i class="fas fa-bars"></i>  </a> <a class="btn btn-danger  btn-sm" style="margin-left:5px " href="/Course/DeleteCourse/' + data + '"><i class="fas fa-trash"></i>  </a>';
+                            },
+                            "orderable": false
+                        }
+
+                    ]
+                });
+
+        });
+    </script>
+}

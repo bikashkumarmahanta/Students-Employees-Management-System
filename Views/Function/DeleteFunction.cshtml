@@ -1,0 +1,169 @@
+﻿
+@model MyMCE.Models.Domain.Function.tbl_MCE_Function
+
+@{
+    /**/
+
+    /**/
+
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdminLte.cshtml";
+}
+
+<script src="~/adminlte/js/sweet-alert.init.js"></script>
+<script src="~/adminlte/js/sweetalert.min.js"></script>
+<script src="~/adminlte/js/sweetalert2.all.min.js"></script>
+
+@section Scripts {
+    <script type="text/javascript" language="javascript">
+        $(function () {
+
+            $("#btnSubmit").click(function () {
+
+                if (confirm("Are you sure you want to Save changes?")) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            });
+        });
+    </script>
+}
+
+@using (Html.BeginForm("DeleteFunction", "Function", FormMethod.Post, new { @id = "CreateForm" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+
+            <h3 class="card-title">Delete Function</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <!-- card-body -->
+        <div class="card-body">
+            <div class="tab-content">
+                <div class="active tab-pane" id="Add">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <!-- text input -->
+                            <div class="form-group">
+                                @Html.HiddenFor(model => model.intFunctionID)
+
+                                @Html.LabelFor(model => model.vchFunctionName)
+                                @Html.EditorFor(model => model.vchFunctionName, new { htmlAttributes = new { @class = "form-control form-control-sm", @disabled = "disabled" } })
+                                <!-- As desabled control can not return the value to controller hence hiddent field is used to return the value -->
+
+                                @Html.ValidationMessageFor(model => model.vchFunctionName, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.vchFileName)
+
+                                @Html.EditorFor(model => model.vchFileName, new { htmlAttributes = new { @class = "form-control form-control-sm", @disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.vchFileName, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.vchDescription)
+
+                                @Html.EditorFor(model => model.vchDescription, new { htmlAttributes = new { @class = "form-control form-control-sm", @disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.vchDescription, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.vchAction1)
+                                @Html.EditorFor(model => model.vchAction1, new { htmlAttributes = new { @class = "form-control form-control-sm", @disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.vchAction1, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <!-- text input -->
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.vchAction2)
+                                @Html.EditorFor(model => model.vchAction2, new { htmlAttributes = new { @class = "form-control form-control-sm", @disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.vchAction2, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.vchAction3)
+                                @Html.EditorFor(model => model.vchAction3, new { htmlAttributes = new { @class = "form-control form-control-sm", @disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.vchAction3, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+
+                                @Html.LabelFor(model => model.vchRemarks)
+
+                                @Html.EditorFor(model => model.vchRemarks, new { htmlAttributes = new { @class = "form-control form-control-sm", @disabled = "disabled" } })
+                                @Html.ValidationMessageFor(model => model.vchRemarks, "", new { @class = "text-danger" })
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="View">
+
+                </div>
+
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <input type="submit" value="Delete" id="btnSubmit" class="btn btn-info" />
+
+
+
+            <h3 class="btn btn-default float-right">@Html.ActionLink("Back to List", "ViewFunctionDataTableWithSearchPanel")</h3>
+
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+}
+
+

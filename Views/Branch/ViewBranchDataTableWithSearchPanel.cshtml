@@ -1,0 +1,266 @@
+﻿@model MyMCE.Models.Domain.Branches.tbl_MCE_Branch
+
+@{
+    ViewBag.Title = "ViewBranchDataTableWithSearchPanel";
+    Layout = "~/Views/Shared/_LayoutAdminLte.cshtml";
+}
+
+<script src="~/adminlte/js/sweet-alert.init.js"></script>
+<script src="~/adminlte/js/sweetalert.min.js"></script>
+<script src="~/adminlte/js/sweetalert2.all.min.js"></script>
+
+@if (TempData["Success"] != null)
+{
+    <script type="text/javascript">
+                            swal.fire(
+                                {
+                                    title: '@TempData["Success"]',
+                                    type: 'success'
+                                });
+    </script>
+
+}
+
+@*Following JQuery need cascade drop down (to add to populate branch as per selection of Course)*@
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-12 col-sm-12">
+            <div class="card card-primary card-outline card-outline-tabs">
+                <div class="card-header p-0 border-bottom-0">
+                    <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Branch/CreateBranch">New Branch</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active">View Branch</a>
+                        </li>
+
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="custom-tabs-new-subject">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <!-- text input -->
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.intCourseID)
+
+                                                        @Html.DropDownListFor(Model => Model.intCourseID, new SelectList(ViewBag.courseList as System.Collections.IEnumerable, "intCourseID", "vchCourseName"),
+                                                                       "Select a Course", htmlAttributes: new { @class = "form-control " })
+
+                                                        @Html.ValidationMessageFor(model => model.intCourseID, "", new { @class = "text-danger" })
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        @Html.LabelFor(model => model.vchBranchDescription)
+
+                                                        @Html.EditorFor(model => model.vchBranchDescription, new { htmlAttributes = new { @class = "form-control " } })
+                                                        @Html.ValidationMessageFor(model => model.vchBranchDescription, "", new { @class = "text-danger" })
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+
+                                                <div class="col-sm-3 offset-sm-6">
+                                                    <div class="form-group">
+                                                        <div class="text-right">
+                                                            <input type="submit" value="Show" id="btnShow" class="btn btn-info" />
+                                                            @*<a class="btn btn-info" href="/Subject/CreateSubjectTab"><i class="fa fa-search" aria-hidden="true"></i> Show</a>*@
+
+                                                            @*<input type="submit" value="Bind View Data To Controller Example" id="btnSend" class="btn btn-info" />*@
+
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="clearfix"></div>
+                                            </div>
+
+                                            <div class="row">
+
+
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- /.card-header -->
+                                        <div class="card-body">
+
+                                            <table id="BranchTable" class="table table-striped table-bordered" style="width:100%">
+                                                @*Semantic UI*@
+                                                @*<table id="employeeTable" class="ui celled table">*@
+                                                @*Bootstrap*@
+                                                @*<table id="employeeTable" class="table table-striped table-bordered">*@
+
+                                                <thead>
+                                                    <tr>
+                                                        <th>Course Name</th>
+                                                        <th>Branch Code</th>
+                                                        <th>Branch Name</th>
+                                                        <th>Action</th>
+
+                                                    </tr>
+                                                </thead>
+
+                                            </table>
+
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
+
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                    </div>
+
+                    <!-- /.tab-content -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /.content -->
+
+
+<link href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+@*For Export Buttons*@
+<link href="//cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css" rel="stylesheet" />
+
+@section scripts{
+    @* Normal *@
+    <script src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+    @*For Export Buttons*@
+    <script src="//cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
+
+    <script>
+        var grid;
+        jQuery(document).ready(function ($) {
+            //initialise blank datatable on page load
+            grid = $('#BranchTable').DataTable({
+                "processing": false, // control the processing indicator.
+                paging: false,
+                searching: false,
+                info: false,
+                // you can load data here also as per requirement
+            });
+        });
+
+        //Following JQuery function shows how to bind model data and pass to controller
+        @*$(document).ready(function () {
+            $("#btnSend").click(function () {
+                var tbl_MCE_Subject = { vchSubjectDescription: $("#vchSubjectDescription").val() };
+                alert("button click" + tbl_MCE_Subject.vchSubjectDescription);
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("TestData", "Subject")',
+                    dataType: "json",
+                    data: JSON.stringify({ tbl_MCE_Subject }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                    alert(data.vchSubjectDescription);
+                    }
+                });
+            });
+        });*@
+
+        //l - length changing input control
+        //f - filtering input
+        //t - The table!
+        //i - Table information summary
+        //p - pagination control
+        //r - processing display element
+
+        jQuery(document).ready(function ($) {
+            jQuery('#btnShow').click(function () {
+                //debugger
+                var branchSearchPanel = {};
+                branchSearchPanel.intCourseID = $("#intCourseID").val();
+                branchSearchPanel.vchBranchDescription = $("#vchBranchDescription").val();
+
+
+                // destroy datatable
+                $("#BranchTable").dataTable().fnDestroy()
+                //reinitialise datatable
+                var oTable=$("#BranchTable").dataTable(
+                    {
+                        "processing": true, // for show progress bar
+                        "serverSide": true, // for process server side
+                        "filter": false, // this is for disable filter (search box)
+                        "orderMulti": false, // for disable multi column order
+                        //"dom": '<"top"i>rt<"bottom"lp><"clear">',
+                       // "order": [[3, "asc"]], // Default ordering (sorting) asc, desc
+                        //To display processing icon while loading the data
+                        "language":
+                        {
+                            "processing": "<div class='overlay custom-loader-background'><i class='fa fa-cog fa-spin custom-loader-color'></i></div>"
+                        },
+
+                        "ajax": {
+                            "url": "/Branch/GetBranchForSearchPanel",
+                            "type": "POST",
+                            "datatype": "json",
+                            "data": {branchSearchPanel: branchSearchPanel},
+                        },
+
+                        "columns": [
+                            { "data": "vchCourseName", "title": "Course ", "name": "vchCourseName", "width": "30%" },
+                            { "data": "vchBranchCode", "title": "BranchCode ", "name": "vchBranchCode", "width": "20%" },
+                            { "data": "vchBranchName", "title": "BranchName ", "name": "vchBranchName", "width": "30%" },
+
+                            {
+                                "data": "intBranchID", /*"width": "50px",*/ "render": function (data) {
+                                    return '<a class="btn btn-primary btn-sm" href="/Branch/Edit/' + data + '"><i class="fas fa-edit"></i> </a><a class="btn btn-warning  btn-sm" style="margin-left:5px " href="/Branch/Details/' + data + '"><i class="fas fa-bars"></i>  </a> <a class="btn btn-danger  btn-sm" style="margin-left:5px " href="/Branch/DeleteBranch/' + data + '"><i class="fas fa-trash"></i>  </a>';
+                                },
+                                "orderable": false
+                            }
+
+                        ],
+                        //dom: 'Bfrtip',
+                        dom: 'B<"top"i>rt<"bottom"lp><"clear">',
+                        buttons: [
+                            { extend: 'copy' },
+                            { extend: 'csv' },
+                            { extend: 'excel' },
+                            { extend: 'pdf' },
+                            { extend: 'print' }
+                        ]
+                    }
+                );
+            });
+
+
+
+        });
+    </script>
+
+
+}
